@@ -6,16 +6,16 @@ import (
 	"github.com/tylergu/zookeeper-workload/zookeeperclient"
 )
 
-var ZK_CLUSTER_NAME string = "test-cluster"
-
 func main() {
 	client := zookeeperclient.DefaultZookeeperClient{}
-	err := client.Connect(GetZkServiceUri())
+	err := client.Connect(zookeeperclient.GetZkServiceUri())
 	if err != nil {
 		panic(err)
 	}
-}
 
-func GetZkServiceUri() string {
-	return fmt.Sprintf("%s-client", ZK_CLUSTER_NAME) + ":2181"
+	data, err := client.Get("/test")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%s", data)
 }
